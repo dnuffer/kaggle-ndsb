@@ -1,0 +1,10 @@
+numpy==1.8.2
+scipy==0.13.3
+Theano==0.7
+-e git+git://github.com/benanne/Lasagne.git@f445b71#egg=Lasagne
+scikit-learn==0.15.2
+scikit-image==0.10.1
+ghalton==0.6
+PyCUDA==2014.1
+pandas==0.15.2
+mahotas==1.2.4
