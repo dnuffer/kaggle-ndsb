@@ -90,6 +90,7 @@ print "Load data"
 config.data_loader.set_params(metadata['data_loader_params'])
 # don't call config.data_loader.estimate_params() here! Parameters don't need to be estimated.
 
+images = None
 augment = not subset.endswith("noaug")
 if subset.startswith("test"):
     config.data_loader.load_test()
@@ -117,18 +118,22 @@ else:
     print "Unknown subset: %s" % subset
 
 
+num_predictions = None
 
 if augment:
     print "  using test-time augmentation"
     num_test_tfs = len(config.data_loader.augmentation_transforms_test)
-    # num_predictions = len(images) * num_test_tfs
+    if images is not None:
+        num_predictions = len(images) * num_test_tfs
 else:
     print "  NOT using test-time augmentation (noaug)"
-    # num_predictions = len(images)
+    if images is not None:
+        num_predictions = len(images)
 
-# print "  %d predictions will be made" % num_predictions
-# print "  number of chunks: %d" % int(np.ceil(num_predictions / float(config.chunk_size)))
-# print
+if num_predictions is not None and config.chunk_size is not None:
+    print "  %d predictions will be made" % num_predictions
+    print "  number of chunks: %d" % int(np.ceil(num_predictions / float(config.chunk_size)))
+    print
 
 
 print "Compute output"
